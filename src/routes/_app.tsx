@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Bell, BookOpen, CalendarCheck, ClipboardList, GraduationCap, LayoutDashboard, LogOut, Menu, Users, FileText } from "lucide-react";
+import { Bell, BookOpen, CalendarCheck, CalendarDays, ClipboardList, GraduationCap, LayoutDashboard, LogOut, Menu, Users, FileText } from "lucide-react";
 import { logout, useDb, useSession } from "@/lib/store";
 import type { Role } from "@/data/seed";
 
@@ -12,6 +12,7 @@ const NAV: { to: string; label: string; icon: typeof Users; roles: Role[] }[] = 
   { to: "/appel", label: "Appel & Justificatifs", icon: CalendarCheck, roles: ["TEACHER"] },
   { to: "/mes-notes", label: "Notes", icon: GraduationCap, roles: ["STUDENT", "PARENT"] },
   { to: "/mes-absences", label: "Absences", icon: FileText, roles: ["STUDENT", "PARENT"] },
+  { to: "/emploi-du-temps", label: "Emploi du temps", icon: CalendarDays, roles: ["ADMIN", "TEACHER", "STUDENT", "PARENT"] },
   { to: "/notifications", label: "Notifications", icon: Bell, roles: ["ADMIN", "TEACHER", "STUDENT", "PARENT"] },
 ];
 const ROLE_FR: Record<Role, string> = { ADMIN: "Administrateur", TEACHER: "Enseignant", STUDENT: "Étudiant", PARENT: "Parent" };
@@ -31,12 +32,12 @@ function AppLayout() {
   return (
     <div className="flex min-h-screen">
       <aside className={`fixed inset-y-0 left-0 z-40 w-64 border-r bg-sidebar p-4 transition-transform md:static md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="mb-8 flex items-center gap-2 px-2 text-lg font-bold">
-          <span className="rounded-lg bg-primary p-1.5 text-primary-foreground"><GraduationCap className="h-5 w-5" /></span> EduTrack
+        <div className="mb-8 flex items-center gap-2 px-2 text-lg font-bold text-sidebar-foreground">
+          <span className="rounded-xl bg-sidebar-primary p-1.5 text-sidebar-primary-foreground"><GraduationCap className="h-5 w-5" /></span> EduTrack
         </div>
         <nav className="space-y-1">
           {items.map((i) => (
-            <Link key={i.to} to={i.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent" activeProps={{ className: "bg-primary/10 font-semibold text-primary" }}>
+            <Link key={i.to} to={i.to} onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-sidebar-foreground/75 transition hover:bg-sidebar-accent hover:text-sidebar-foreground" activeProps={{ className: "!bg-sidebar-primary font-semibold !text-sidebar-primary-foreground shadow-sm" }}>
               <i.icon className="h-4 w-4" /> {i.label}
             </Link>
           ))}
