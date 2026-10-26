@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppAppelRouteImport } from './routes/_app.appel'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppEmploiDuTempsRouteImport } from './routes/_app.emploi-du-temps'
 import { Route as AppMatieresRouteImport } from './routes/_app.matieres'
 import { Route as AppMesAbsencesRouteImport } from './routes/_app.mes-absences'
 import { Route as AppMesNotesRouteImport } from './routes/_app.mes-notes'
@@ -37,6 +38,11 @@ const AppAppelRoute = AppAppelRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEmploiDuTempsRoute = AppEmploiDuTempsRouteImport.update({
+  id: '/emploi-du-temps',
+  path: '/emploi-du-temps',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMatieresRoute = AppMatieresRouteImport.update({
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/appel': typeof AppAppelRoute
   '/dashboard': typeof AppDashboardRoute
+  '/emploi-du-temps': typeof AppEmploiDuTempsRoute
   '/matieres': typeof AppMatieresRoute
   '/mes-absences': typeof AppMesAbsencesRoute
   '/mes-notes': typeof AppMesNotesRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/appel': typeof AppAppelRoute
   '/dashboard': typeof AppDashboardRoute
+  '/emploi-du-temps': typeof AppEmploiDuTempsRoute
   '/matieres': typeof AppMatieresRoute
   '/mes-absences': typeof AppMesAbsencesRoute
   '/mes-notes': typeof AppMesNotesRoute
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/appel': typeof AppAppelRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/emploi-du-temps': typeof AppEmploiDuTempsRoute
   '/_app/matieres': typeof AppMatieresRoute
   '/_app/mes-absences': typeof AppMesAbsencesRoute
   '/_app/mes-notes': typeof AppMesNotesRoute
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/'
     | '/appel'
     | '/dashboard'
+    | '/emploi-du-temps'
     | '/matieres'
     | '/mes-absences'
     | '/mes-notes'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/appel'
     | '/dashboard'
+    | '/emploi-du-temps'
     | '/matieres'
     | '/mes-absences'
     | '/mes-notes'
@@ -134,6 +145,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/appel'
     | '/_app/dashboard'
+    | '/_app/emploi-du-temps'
     | '/_app/matieres'
     | '/_app/mes-absences'
     | '/_app/mes-notes'
@@ -175,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/emploi-du-temps': {
+      id: '/_app/emploi-du-temps'
+      path: '/emploi-du-temps'
+      fullPath: '/emploi-du-temps'
+      preLoaderRoute: typeof AppEmploiDuTempsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/matieres': {
@@ -225,6 +244,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAppelRoute: typeof AppAppelRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppEmploiDuTempsRoute: typeof AppEmploiDuTempsRoute
   AppMatieresRoute: typeof AppMatieresRoute
   AppMesAbsencesRoute: typeof AppMesAbsencesRoute
   AppMesNotesRoute: typeof AppMesNotesRoute
@@ -236,6 +256,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAppelRoute: AppAppelRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppEmploiDuTempsRoute: AppEmploiDuTempsRoute,
   AppMatieresRoute: AppMatieresRoute,
   AppMesAbsencesRoute: AppMesAbsencesRoute,
   AppMesNotesRoute: AppMesNotesRoute,
