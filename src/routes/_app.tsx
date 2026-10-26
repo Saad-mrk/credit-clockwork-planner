@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Bell, BookOpen, CalendarCheck, CalendarDays, ClipboardList, GraduationCap, LayoutDashboard, LogOut, Menu, Users, FileText } from "lucide-react";
+import { BarChart3, Bell, BookOpen, CalendarCheck, CalendarDays, ClipboardList, GraduationCap, LayoutDashboard, LogOut, Menu, Users, FileText } from "lucide-react";
 import { logout, useDb, useSession } from "@/lib/store";
 import type { Role } from "@/data/seed";
 
@@ -13,6 +13,7 @@ const NAV: { to: string; label: string; icon: typeof Users; roles: Role[] }[] = 
   { to: "/mes-notes", label: "Notes", icon: GraduationCap, roles: ["STUDENT", "PARENT"] },
   { to: "/mes-absences", label: "Absences", icon: FileText, roles: ["STUDENT", "PARENT"] },
   { to: "/emploi-du-temps", label: "Emploi du temps", icon: CalendarDays, roles: ["ADMIN", "TEACHER", "STUDENT", "PARENT"] },
+  { to: "/analyse-absences", label: "Analyse des absences", icon: BarChart3, roles: ["ADMIN", "TEACHER"] },
   { to: "/notifications", label: "Notifications", icon: Bell, roles: ["ADMIN", "TEACHER", "STUDENT", "PARENT"] },
 ];
 const ROLE_FR: Record<Role, string> = { ADMIN: "Administrateur", TEACHER: "Enseignant", STUDENT: "Étudiant", PARENT: "Parent" };
