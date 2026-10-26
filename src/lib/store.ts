@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { buildSeed, type DB, type User } from "@/data/seed";
 
 /** Mock in-memory DB persisted to localStorage. Swap for a real API service later. */
@@ -46,7 +46,13 @@ function readSession() {
   return session;
 }
 export function useSession(): User | null | undefined {
-  return useSyncExternalStore((l) => { authL.add(l); return () => authL.delete(l); }, () => readSession(), () => undefined);
+  const [s, setS] = useState<User | null | undefined>(undefined);
+  useEffect(() => {
+    const l = () => setS(readSession());
+    authL.add(l); l();
+    return () => { authL.delete(l); };
+  }, []);
+  return s;
 }
 export function login(email: string, password: string): User | null {
   load();
