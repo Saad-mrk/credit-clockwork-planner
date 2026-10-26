@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Clock, MapPin, Pencil, Plus, Trash2, User as UserIcon, X } from "lucide-react";
 import { toast } from "sonner";
-import { uid, update, useDb, useSession } from "@/lib/store";
+import { uid, useDb, useSession } from "@/lib/store";
+import { deleteSession, saveSession, useSharedSessions } from "@/lib/timetable-db";
 import { buildTimetable, DAYS, SLOTS, type Session } from "@/data/timetable";
 import { PageHeader } from "@/components/shared";
 
@@ -21,7 +22,9 @@ const TONES = ["bg-primary/10 border-primary/30 text-primary", "bg-success/10 bo
 function Timetable() {
   const db = useDb();
   const user = useSession();
-  const all = useMemo(() => db.sessions ?? buildTimetable(db), [db]);
+  const { rows, reload } = useSharedSessions();
+  const remoteEmpty = rows !== null && rows.length === 0;
+  const all = useMemo(() => (rows && rows.length ? rows : buildTimetable(db)), [rows, db]);
   const ownClass = user?.role === "STUDENT" ? user.classId : user?.role === "PARENT" ? db.users.find((u) => u.id === user.childId)?.classId : undefined;
   const isTeacher = user?.role === "TEACHER";
   const isAdmin = user?.role === "ADMIN";
@@ -30,7 +33,6 @@ function Timetable() {
   const [edit, setEdit] = useState<Session | null>(null);
   if (!user) return null;
 
-  const save = (list: Session[]) => update((d) => ({ ...d, sessions: list }));
   const sessions = all.filter((s) => (classId === "mine" ? s.teacherId === user.id : s.classId === classId));
   const today = (new Date().getDay() + 6) % 7;
   const days = day === "all" ? DAYS.map((_, i) => i) : [day];
@@ -39,18 +41,16 @@ function Timetable() {
   const cName = (id: string) => db.classes.find((c) => c.id === id)?.name ?? "";
   const canEdit = isAdmin && classId !== "mine";
 
-  const submit = (s: Session) => {
+  const submit = async (s: Session) => {
     const clash = all.find((x) => x.id !== s.id && x.day === s.day && x.slot === s.slot && (x.classId === s.classId || x.teacherId === s.teacherId));
     if (clash) return toast.error(clash.classId === s.classId ? "Cette classe a déjà un cours sur ce créneau." : "Cet enseignant a déjà un cours sur ce créneau.");
-    save(all.some((x) => x.id === s.id) ? all.map((x) => (x.id === s.id ? s : x)) : [...all, s]);
-    toast.success("Cours enregistré");
-    setEdit(null);
+    try { await saveSession(s, all, remoteEmpty); await reload(); toast.success("Cours enregistré"); setEdit(null); }
+    catch { toast.error("Échec de l'enregistrement"); }
   };
-  const remove = (s: Session) => {
+  const remove = async (s: Session) => {
     if (!confirm(`Supprimer ${name(s.subjectId)} (${DAYS[s.day]}, ${SLOTS[s.slot]}) ?`)) return;
-    save(all.filter((x) => x.id !== s.id));
-    toast.success("Cours supprimé");
-    setEdit(null);
+    try { await deleteSession(s, all, remoteEmpty); await reload(); toast.success("Cours supprimé"); setEdit(null); }
+    catch { toast.error("Échec de la suppression"); }
   };
   const blank = (d: number, slot: number): Session => {
     const m = db.subjects[0];
