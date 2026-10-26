@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppAppelRouteImport } from './routes/_app.appel'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppMatieresRouteImport } from './routes/_app.matieres'
+import { Route as AppMesAbsencesRouteImport } from './routes/_app.mes-absences'
+import { Route as AppMesNotesRouteImport } from './routes/_app.mes-notes'
+import { Route as AppNotesRouteImport } from './routes/_app.notes'
+import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
+import { Route as AppUtilisateursRouteImport } from './routes/_app.utilisateurs'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAppelRoute = AppAppelRouteImport.update({
+  id: '/appel',
+  path: '/appel',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMatieresRoute = AppMatieresRouteImport.update({
+  id: '/matieres',
+  path: '/matieres',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMesAbsencesRoute = AppMesAbsencesRouteImport.update({
+  id: '/mes-absences',
+  path: '/mes-absences',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMesNotesRoute = AppMesNotesRouteImport.update({
+  id: '/mes-notes',
+  path: '/mes-notes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotesRoute = AppNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUtilisateursRoute = AppUtilisateursRouteImport.update({
+  id: '/utilisateurs',
+  path: '/utilisateurs',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appel': typeof AppAppelRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/matieres': typeof AppMatieresRoute
+  '/mes-absences': typeof AppMesAbsencesRoute
+  '/mes-notes': typeof AppMesNotesRoute
+  '/notes': typeof AppNotesRoute
+  '/notifications': typeof AppNotificationsRoute
+  '/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appel': typeof AppAppelRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/matieres': typeof AppMatieresRoute
+  '/mes-absences': typeof AppMesAbsencesRoute
+  '/mes-notes': typeof AppMesNotesRoute
+  '/notes': typeof AppNotesRoute
+  '/notifications': typeof AppNotificationsRoute
+  '/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/appel': typeof AppAppelRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/matieres': typeof AppMatieresRoute
+  '/_app/mes-absences': typeof AppMesAbsencesRoute
+  '/_app/mes-notes': typeof AppMesNotesRoute
+  '/_app/notes': typeof AppNotesRoute
+  '/_app/notifications': typeof AppNotificationsRoute
+  '/_app/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/appel'
+    | '/dashboard'
+    | '/matieres'
+    | '/mes-absences'
+    | '/mes-notes'
+    | '/notes'
+    | '/notifications'
+    | '/utilisateurs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/appel'
+    | '/dashboard'
+    | '/matieres'
+    | '/mes-absences'
+    | '/mes-notes'
+    | '/notes'
+    | '/notifications'
+    | '/utilisateurs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/appel'
+    | '/_app/dashboard'
+    | '/_app/matieres'
+    | '/_app/mes-absences'
+    | '/_app/mes-notes'
+    | '/_app/notes'
+    | '/_app/notifications'
+    | '/_app/utilisateurs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/appel': {
+      id: '/_app/appel'
+      path: '/appel'
+      fullPath: '/appel'
+      preLoaderRoute: typeof AppAppelRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/matieres': {
+      id: '/_app/matieres'
+      path: '/matieres'
+      fullPath: '/matieres'
+      preLoaderRoute: typeof AppMatieresRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/mes-absences': {
+      id: '/_app/mes-absences'
+      path: '/mes-absences'
+      fullPath: '/mes-absences'
+      preLoaderRoute: typeof AppMesAbsencesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/mes-notes': {
+      id: '/_app/mes-notes'
+      path: '/mes-notes'
+      fullPath: '/mes-notes'
+      preLoaderRoute: typeof AppMesNotesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notes': {
+      id: '/_app/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AppNotesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notifications': {
+      id: '/_app/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/utilisateurs': {
+      id: '/_app/utilisateurs'
+      path: '/utilisateurs'
+      fullPath: '/utilisateurs'
+      preLoaderRoute: typeof AppUtilisateursRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAppelRoute: typeof AppAppelRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppMatieresRoute: typeof AppMatieresRoute
+  AppMesAbsencesRoute: typeof AppMesAbsencesRoute
+  AppMesNotesRoute: typeof AppMesNotesRoute
+  AppNotesRoute: typeof AppNotesRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
+  AppUtilisateursRoute: typeof AppUtilisateursRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAppelRoute: AppAppelRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppMatieresRoute: AppMatieresRoute,
+  AppMesAbsencesRoute: AppMesAbsencesRoute,
+  AppMesNotesRoute: AppMesNotesRoute,
+  AppNotesRoute: AppNotesRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
+  AppUtilisateursRoute: AppUtilisateursRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
