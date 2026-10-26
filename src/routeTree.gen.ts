@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppAnalyseAbsencesRouteImport } from './routes/_app.analyse-absences'
 import { Route as AppAppelRouteImport } from './routes/_app.appel'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
 import { Route as AppEmploiDuTempsRouteImport } from './routes/_app.emploi-du-temps'
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppAnalyseAbsencesRoute = AppAnalyseAbsencesRouteImport.update({
+  id: '/analyse-absences',
+  path: '/analyse-absences',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppAppelRoute = AppAppelRouteImport.update({
   id: '/appel',
@@ -78,6 +84,7 @@ const AppUtilisateursRoute = AppUtilisateursRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyse-absences': typeof AppAnalyseAbsencesRoute
   '/appel': typeof AppAppelRoute
   '/dashboard': typeof AppDashboardRoute
   '/emploi-du-temps': typeof AppEmploiDuTempsRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyse-absences': typeof AppAnalyseAbsencesRoute
   '/appel': typeof AppAppelRoute
   '/dashboard': typeof AppDashboardRoute
   '/emploi-du-temps': typeof AppEmploiDuTempsRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/analyse-absences': typeof AppAnalyseAbsencesRoute
   '/_app/appel': typeof AppAppelRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/emploi-du-temps': typeof AppEmploiDuTempsRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/analyse-absences'
     | '/appel'
     | '/dashboard'
     | '/emploi-du-temps'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/analyse-absences'
     | '/appel'
     | '/dashboard'
     | '/emploi-du-temps'
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/analyse-absences'
     | '/_app/appel'
     | '/_app/dashboard'
     | '/_app/emploi-du-temps'
@@ -174,6 +186,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/analyse-absences': {
+      id: '/_app/analyse-absences'
+      path: '/analyse-absences'
+      fullPath: '/analyse-absences'
+      preLoaderRoute: typeof AppAnalyseAbsencesRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/appel': {
       id: '/_app/appel'
@@ -242,6 +261,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAnalyseAbsencesRoute: typeof AppAnalyseAbsencesRoute
   AppAppelRoute: typeof AppAppelRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppEmploiDuTempsRoute: typeof AppEmploiDuTempsRoute
@@ -254,6 +274,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAnalyseAbsencesRoute: AppAnalyseAbsencesRoute,
   AppAppelRoute: AppAppelRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppEmploiDuTempsRoute: AppEmploiDuTempsRoute,
