@@ -8,7 +8,7 @@ export interface Grade { id: string; studentId: string; subjectId: string; type:
 export type AbsStatus = "justifiée" | "non justifiée" | "en attente";
 export interface Absence { id: string; studentId: string; subjectId: string; date: string; kind: "Absent" | "Retard"; status: AbsStatus; reason?: string }
 export interface Notif { id: string; title: string; date: string; read: boolean }
-export interface DB { users: User[]; classes: Klass[]; subjects: Subject[]; grades: Grade[]; absences: Absence[]; notifications: Notif[]; threshold: number }
+export interface DB { users: User[]; classes: Klass[]; subjects: Subject[]; grades: Grade[]; absences: Absence[]; notifications: Notif[]; threshold: number; sessions?: import("@/data/timetable").Session[] }
 
 let seed = 42;
 const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
