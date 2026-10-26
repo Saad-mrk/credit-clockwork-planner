@@ -46,7 +46,7 @@ function readSession() {
   return session;
 }
 export function useSession(): User | null | undefined {
-  const [s, setS] = useState<User | null | undefined>(undefined);
+  const [s, setS] = useState<User | null | undefined>(() => session);
   useEffect(() => {
     const l = () => setS(readSession());
     authL.add(l); l();
