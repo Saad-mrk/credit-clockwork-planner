@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      timetable_sessions: {
+        Row: {
+          class_id: string
+          day: number
+          id: string
+          room: string
+          slot: number
+          subject_id: string
+          teacher_id: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          day: number
+          id: string
+          room?: string
+          slot: number
+          subject_id: string
+          teacher_id: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          day?: number
+          id?: string
+          room?: string
+          slot?: number
+          subject_id?: string
+          teacher_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
