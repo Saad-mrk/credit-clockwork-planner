@@ -20,6 +20,7 @@ import { Route as AppMesAbsencesRouteImport } from './routes/_app.mes-absences'
 import { Route as AppMesNotesRouteImport } from './routes/_app.mes-notes'
 import { Route as AppNotesRouteImport } from './routes/_app.notes'
 import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
+import { Route as AppSuiviIaRouteImport } from './routes/_app.suivi-ia'
 import { Route as AppUtilisateursRouteImport } from './routes/_app.utilisateurs'
 
 const IndexRoute = IndexRouteImport.update({
@@ -76,6 +77,11 @@ const AppNotificationsRoute = AppNotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSuiviIaRoute = AppSuiviIaRouteImport.update({
+  id: '/suivi-ia',
+  path: '/suivi-ia',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppUtilisateursRoute = AppUtilisateursRouteImport.update({
   id: '/utilisateurs',
   path: '/utilisateurs',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/mes-notes': typeof AppMesNotesRoute
   '/notes': typeof AppNotesRoute
   '/notifications': typeof AppNotificationsRoute
+  '/suivi-ia': typeof AppSuiviIaRoute
   '/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRoutesByTo {
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/mes-notes': typeof AppMesNotesRoute
   '/notes': typeof AppNotesRoute
   '/notifications': typeof AppNotificationsRoute
+  '/suivi-ia': typeof AppSuiviIaRoute
   '/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRoutesById {
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/_app/mes-notes': typeof AppMesNotesRoute
   '/_app/notes': typeof AppNotesRoute
   '/_app/notifications': typeof AppNotificationsRoute
+  '/_app/suivi-ia': typeof AppSuiviIaRoute
   '/_app/utilisateurs': typeof AppUtilisateursRoute
 }
 export interface FileRouteTypes {
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/mes-notes'
     | '/notes'
     | '/notifications'
+    | '/suivi-ia'
     | '/utilisateurs'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/mes-notes'
     | '/notes'
     | '/notifications'
+    | '/suivi-ia'
     | '/utilisateurs'
   id:
     | '__root__'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/_app/mes-notes'
     | '/_app/notes'
     | '/_app/notifications'
+    | '/_app/suivi-ia'
     | '/_app/utilisateurs'
   fileRoutesById: FileRoutesById
 }
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/suivi-ia': {
+      id: '/_app/suivi-ia'
+      path: '/suivi-ia'
+      fullPath: '/suivi-ia'
+      preLoaderRoute: typeof AppSuiviIaRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/utilisateurs': {
       id: '/_app/utilisateurs'
       path: '/utilisateurs'
@@ -270,6 +289,7 @@ interface AppRouteChildren {
   AppMesNotesRoute: typeof AppMesNotesRoute
   AppNotesRoute: typeof AppNotesRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
+  AppSuiviIaRoute: typeof AppSuiviIaRoute
   AppUtilisateursRoute: typeof AppUtilisateursRoute
 }
 
@@ -283,6 +303,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppMesNotesRoute: AppMesNotesRoute,
   AppNotesRoute: AppNotesRoute,
   AppNotificationsRoute: AppNotificationsRoute,
+  AppSuiviIaRoute: AppSuiviIaRoute,
   AppUtilisateursRoute: AppUtilisateursRoute,
 }
 
